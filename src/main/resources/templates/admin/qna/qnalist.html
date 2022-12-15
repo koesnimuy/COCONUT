@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A목록</title>
+</head>
+<body>
+    <div class="header">
+        <h1>Q&A목록</h1>
+    </div>
+    <div class="menu">
+        <a th:href="@{/adhome}" ><input class="btn" type="button" value="메인" /></a>
+    </div>
+    <div class="content">
+        <table class="qna_table">
+            <tr>
+                <!-- <th>체크</th> -->
+                <th>번호</th>
+                <th>제목</th>
+                <th>날짜</th>
+                <th>상태</th>
+                <th>분류</th>
+                <th>아이디</th>
+                <th></th>
+            </tr>
+            <tr th:each="obj, idx : ${list}">
+                <td width="5%" th:text="${obj.qnano}"></td>
+                <td class="qna_table_title" width="50%" th:text="${obj.title}"></td>
+                <td width="25%" th:text="${obj.regdate}"></td>
+                <td width="5%">
+                    <label th:if="${obj.status =='완료' }" th:text="${obj.status}" style="color: #707FC2;"></label>
+                    <label th:if="${obj.status =='대기' }" th:text="${obj.status}" style="color: #C29384;"></label>
+                </td>
+                <td width="5%" th:text="${obj.type}"></td>
+                <td width="10%" th:text="${obj.userid}"></td>
+                <td>
+                    <a th:if="${obj.status =='대기' }" th:href="@{/admin/qnareply(no=${obj.qnano})}"><button class="btn1_red">답변</button></a>
+                    <a th:if="${obj.status =='완료' }" th:href="@{/admin/qnareply(no=${obj.qnano})}"><button class="btn1_blue">상세보기</button></a>    
+                </td>
+            </tr>
+        </table>
+        <div class="footer">
+            <th:block th:each="i : ${#numbers.sequence(1, total)}">
+                <a class="page" th:href="@{/admin/qnalist(page=${i}, type='')}" th:text="${i}"></a>
+            </th:block>
+        </div>
+    </div>
+</body>
+<style>
+   body {
+        padding: 100px;
+        background: #0F1429;
+        color: #B4B8CC;
+    }
+    .header {
+        text-align: center;
+        font-size: 33px;
+    }
+    .menu {
+        margin-bottom: 30px;
+    }
+    .content {
+        padding: 15px 0 15px 0;
+        border: 1px solid;
+        border-radius: 0.5em;
+    }
+    .btn {
+        width: 150px;
+        height: 45px;
+        border: 1px solid #4F5675;
+        background-color: #0F1429;
+        color: #B4B8CC;
+        font-size: 20px;
+        border-radius: 0.5rem;
+        cursor: pointer;
+    }
+    .btn:hover {
+        border: 1px solid #74b59d;
+        color: #74b59d;
+    }
+    .btn1_red {
+        width: 100px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #0F1429;
+        color: #C29384;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn1_red:hover {
+        border: 1px solid #C29384;
+        color: #C29384;
+    }
+    .btn1_blue {
+        width: 100px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #0F1429;
+        color: #707FC2;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn1_blue:hover {
+        border: 1px solid #707FC2;
+        color: #707FC2;
+    }
+    .qna_table {
+        text-align: center;
+        border-collapse: collapse;
+    }
+    .qna_table_title {
+        text-align: left;
+    }
+    .footer {
+        display: flex;
+        justify-content: center;
+        column-gap: 5px;
+    }
+    .page {
+        color: #B4B8CC;
+    }
+    th {
+        color: #74b59d;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #B4B8CC;
+    }
+    td {
+        padding-top: 10px;
+    }
+</style>
+</html>

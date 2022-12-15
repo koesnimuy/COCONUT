@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QnA답변</title>
+</head>
+<body>
+    <div class="header">
+        <h1>QnA답변</h1>
+    </div>
+    <div class="article">
+        <div class="article_content">
+            <div class="article_left">
+                <div class="article_left_header">
+                    <p th:text="${qna.userid}"></p>
+                    <p th:text="${qna.regdate}"></p>
+                    <p th:text="${qna.type}"></p>
+                </div>
+                <div class="article_left_title">
+                    <h1 th:text="${qna.title}"></h1>
+                </div>
+                <div class="article_left_content">
+                    <p th:text="${qna.content}"></p>
+                </div>
+            </div>
+            <div class="article_right">
+                <div class="article_right_header">
+                    <label>답변</label>
+                </div>
+                <div class="article_right_content">
+                    <form th:if="${qna.status =='대기' }" th:action = "@{/admin/qnareply}" method="post">
+                        <input type="hidden" name="qnacode" th:value="${qna.qnano}" />
+                        <textarea class="input_content" rows="30" cols="40" name="content" ></textarea><br />
+                        <div class="article_right_content_footer">
+                            <input type="submit" class="btn1_silk" value="답변" />
+                            <a th:href="@{/admin/qnalist}" ><input class="btn1_silk" type="button" value="취소" /></a>
+                        </div>
+                    </form>
+                    <div th:if="${qna.status =='완료' }">
+                        <p th:text="${reply.content}"></p>
+                    </div>
+                </div>
+                <div th:if="${qna.status =='완료' }" class="article_right_footer">
+                    <a th:href="@{/admin/qnalist}" ><input class="btn1_silk" type="button" value="목록" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<style>
+    body {
+        padding: 100px;
+        background: #0F1429;
+        color: #B4B8CC;
+    }
+    .header {
+        text-align: center;
+        font-size: 33px;
+    }
+    .article {
+        display: flex;
+        justify-content: center;
+    }
+    .article_content {
+        display: flex;
+        justify-content: space-between;
+        column-gap: 5px;
+    }
+    .article_left {
+        border: 1px solid #B4B8CC;
+        border-radius: 0.5rem;
+        width: 550px;
+    }
+    .article_left_header {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 5px 0 5px;
+        border-bottom: 1px solid;
+    }
+    .article_left_title {
+        display: flex;
+        justify-content: center;
+    }
+    .article_left_content {
+        padding: 5px;
+        min-height: 400px;
+    }
+    .article_right {
+        border: 1px solid #B4B8CC;
+        border-radius: 0.5rem;
+        width: 550px;
+    }
+    .article_right_header {
+        display: flex;
+        justify-content: center;
+        padding: 15px 0 15px 0;
+        border-bottom: 1px solid;
+        font-size: 17px;
+        font-weight: 600;
+    }
+    .article_right_content {
+        display: flex;
+        justify-content: center;
+        min-height: 430px;
+        padding-top: 25px;
+    }
+    .article_right_content_footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .article_right_footer {
+        display: flex;
+        justify-content: flex-end;
+        padding: 5px;
+        border-top: 1px solid;
+    }
+    .btn1_silk {
+        width: 55px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #0F1429;
+        color: #B4B8CC;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .input_content {
+        width: 455px;
+        height: 400px;
+        border: 1px solid #B4B8CC;
+        border-radius: 0.5em;
+        font-size: 18px;
+        color: #B4B8CC;
+        background-color: #0F1429;
+    }
+</style>
+</html>

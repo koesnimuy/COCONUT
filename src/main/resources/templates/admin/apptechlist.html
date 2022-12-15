@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강사신청자관리</title>
+</head>
+<body>
+    <div class="header">
+        <h1>강사신청자관리</h1>
+    </div>
+    <div class="menu">
+        <a th:href="@{/adhome}" ><input class="btn" type="button" value="메인" /></a>
+        <a th:href="@{/admin/techlist}" ><input class="btn" type="button" value="강사관리" /></a>
+        <a th:href="@{/admin/apptechlistall}" ><input class="btn" type="button" value="신청내역" /></a>
+    </div>
+    <div class="content">
+        <table class="tech_table">
+            <tr>
+                <!-- <th>체크</th> -->
+                <th>강사번호</th>
+                <th>카테고리</th>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>연락처</th>
+                <th>신청일</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="obj, idx : ${list}">
+                <!-- <td><input type="checkbox" name="chk" th:value="${obj.id}" /></td> -->
+                <td width="8%" th:text="${obj.teacherno}"></td>
+                <td width="8%" th:text="${obj.category}"></td>
+                <td width="10%" th:text="${obj.id}"></td>
+                <td width="10%" th:text="${obj.name}"></td>
+                <td width="15%" th:text="${obj.phone}"></td>
+                <td width="20%" th:text="${obj.regdate}"></td>
+                <td>
+                    <form th:action="@{/admin/apptechinfo}" method="get">
+                        <input type="hidden" name="teacherno" th:value="${obj.teacherno}" />
+                        <input class="btn1_green" type="submit" value="소개">
+                    </form>
+                </td>
+                <td>    
+                    <form th:action="@{/admin/techallow}" method="post">
+                        <input type="hidden" name="no" th:value="${obj.teacherno}" />
+                        <input class="btn1_blue" type="submit" value="수락">
+                    </form>
+                </td>
+                <td>    
+                    <form th:action="@{/admin/techrefuse}" method="post">
+                        <input type="hidden" name="no" th:value="${obj.teacherno}" />
+                        <input class="btn1_red" type="submit" value="거절">
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <div th:if="${total} != 0" class="footer">
+            <th:block th:each="i : ${#numbers.sequence(1, total)}">
+                <a class="page" th:href="@{/admin/apptechlist(page=${i})}" th:text="${i}"></a>
+            </th:block>
+        </div>
+    </div>
+</body>
+<style>
+    body {
+        padding: 100px;
+        background: #0F1429;
+        color: #B4B8CC;
+    }
+    .header {
+        text-align: center;
+        font-size: 33px;
+    }
+    .menu {
+        margin-bottom: 30px;
+    }
+    .content {
+        padding: 15px 0 15px 0;
+        border: 1px solid;
+        border-radius: 0.5em;
+    }
+    .btn {
+        width: 150px;
+        height: 45px;
+        border: 1px solid #4F5675;
+        background-color: #0F1429;
+        color: #B4B8CC;
+        font-size: 20px;
+        border-radius: 0.5rem;
+        cursor: pointer;
+    }
+    .btn:hover {
+        border: 1px solid #74b59d;
+        color: #74b59d;
+    }
+    .btn1_green {
+        width: 100px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #0F1429;
+        color: #74b59d;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn1_green:hover {
+        border: 1px solid #74b59d;
+        color: #74b59d;
+    }
+    .btn1_blue {
+        width: 100px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #0F1429;
+        color: #707FC2;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn1_blue:hover {
+        border: 1px solid #707FC2;
+        color: #707FC2;
+    }
+    .btn1_red {
+        width: 100px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #0F1429;
+        color: #C29384;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn1_red:hover {
+        border: 1px solid #C29384;
+        color: #C29384;
+    }
+    .tech_table{
+        text-align: center;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th {
+        color: #74b59d;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #B4B8CC;
+    }
+    td {
+        padding-top: 10px;
+    }
+    .footer {
+        display: flex;
+        justify-content: center;
+        column-gap: 5px;
+    }
+    .page {
+        color: #B4B8CC;
+    }
+</style>
+</html>

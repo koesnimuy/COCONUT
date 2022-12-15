@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그아웃</title>
+</head>
+<body>
+    <script>
+        
+        const form = document.createElement("form");
+        form.action = "[[@{/logout}]]";
+        form.method="post";
+
+        const input = document.createElement("input");
+        input.type="hidden";
+        input.name="_csrf";
+        input.value="[[${_csrf.token}]]"
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+
+        form.submit();
+
+    </script>
+</body>
+</html>

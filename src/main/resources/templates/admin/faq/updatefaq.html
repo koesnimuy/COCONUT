@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ수정</title>
+</head>
+<body>
+    <div class="article">
+        <div class="article_header">
+            <h1>FAQ수정</h1>
+        </div>
+        <form th:action="@{/admin/updatefaq}" method="post">
+            <input type="hidden" name="faqno" th:value="${faq.faqno}" />
+            <label class="article_label">제목</label>
+            <input class="input" type="text" name="title" th:value="${faq.title}" /><br /><br />
+            <label class="article_label">내용</label>
+            <textarea class="input_content" rows="10" cols="50" name="content" th:value="${faq.content}" th:text="${faq.content}" ></textarea><br />
+            <div class="form_footer">
+                <input type="submit" class="btn1_blue" value="수정">
+                <a th:href="@{/admin/faqlist}" ><input class="btn1_red" type="button" value="취소" /></a>
+            </div>
+        </form>
+        
+    </div>
+</body>
+<style>
+    body {
+        padding: 100px;
+        background: #0F1429;
+        color: #B4B8CC;
+        display: flex;
+        justify-content: center;
+    }
+    .article {
+        width: 510px;
+    }
+    .article_header {
+        text-align: center;
+        font-size: 33px;
+    }
+    .article_label {
+        font-size: 22px;
+        font-weight: 600;
+    }
+    .btn1_blue {
+        width:50px;
+        height: 30px;
+        border-radius: 0.3rem;
+        border: 1px solid #0F1429;
+        background-color: #0F1429;
+        color: #B4B8CC;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    .btn1_red {
+        width:50px;
+        height: 30px;
+        border-radius: 0.3rem;
+        border: 1px solid #0F1429;
+        background-color: #0F1429;
+        color: #B4B8CC;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    .btn1_blue:hover {
+        color: #707FC2;
+    }
+    .btn1_red:hover {
+        color: #C29384;
+    }
+    .input{
+        width:505px;
+        height: 40px;
+        border: 1px solid #B4B8CC;
+        border-radius: 0.5em;
+        font-size: 18px;
+        color: #B4B8CC;
+        background-color: #0F1429;
+        padding: 3px;
+    }
+    .input_content {
+        width:505px;
+        height: 200px;
+        border: 1px solid #B4B8CC;
+        border-radius: 0.5em;
+        font-size: 15px;
+        color: #B4B8CC;
+        background-color: #0F1429;
+        padding: 3px;
+    }
+    .form_footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+</style>
+</html>

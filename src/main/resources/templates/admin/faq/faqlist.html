@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ관리</title>
+</head>
+<body>
+    <div class="header">
+        <h1>FAQ관리</h1>
+    </div>
+    <div class="menu">
+        <a th:href="@{/adhome}" ><input class="btn" type="button" value="메인" /></a>
+        <a th:href="@{/admin/insertfaq}" ><input class="btn" type="button" value="FAQ추가" /></a>
+    </div>
+    <div class="content">
+        <table class="faq_table">
+            <tr>
+                <!-- <th>체크</th> -->
+                <th>번호</th>
+                <th>제목</th>
+                <th>날짜</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="obj, idx : ${list}">
+                <td width="5%" th:text="${obj.faqno}"></td>
+                <td class="faq_table_title" width="60%" th:text="${obj.title}"></td>
+                <td width="25%" th:text="${obj.regdate}"></td>
+                <td width="5%">
+                    <form th:action="@{/admin/updatefaq}" method="get">
+                        <input type="hidden" name="no" th:value="${obj.faqno}" />
+                        <input class="btn1_blue" type="submit" value="수정">
+                    </form>    
+                </td>
+                <td width="5%">
+                    <form th:action="@{/admin/deletefaq}" method="post">
+                        <input type="hidden" name="no" th:value="${obj.faqno}" />
+                        <input class="btn1_red" type="submit" value="삭제">
+                    </form>    
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+<style>
+    body {
+        padding: 100px;
+        background: #0F1429;
+        color: #B4B8CC;
+    }
+    .header {
+        text-align: center;
+        font-size: 33px;
+    }
+    .menu {
+        margin-bottom: 30px;
+    }
+    .content {
+        padding: 15px 0 15px 0;
+        border: 1px solid;
+        border-radius: 0.5em;
+    }
+    .btn {
+        width: 150px;
+        height: 45px;
+        border: 1px solid #4F5675;
+        background-color: #0F1429;
+        color: #B4B8CC;
+        font-size: 20px;
+        border-radius: 0.5rem;
+        cursor: pointer;
+    }
+    .btn:hover {
+        border: 1px solid #74b59d;
+        color: #74b59d;
+    }
+    .btn1_red {
+        width: 70px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #0F1429;
+        color: #C29384;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn1_red:hover {
+        border: 1px solid #C29384;
+        color: #C29384;
+    }
+    .btn1_blue {
+        width: 70px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #0F1429;
+        color: #707FC2;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn1_blue:hover {
+        border: 1px solid #707FC2;
+        color: #707FC2;
+    }
+    .faq_table {
+        text-align: center;
+        border-collapse: collapse;
+    }
+
+    .faq_table_title {
+        text-align: left;
+    }
+    th {
+        color: #74b59d;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #B4B8CC;
+    }
+    td {
+        padding-top: 10px;
+    }
+</style>
+</html>

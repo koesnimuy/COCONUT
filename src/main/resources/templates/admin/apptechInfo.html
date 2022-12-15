@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강사신청자 소개</title>
+</head>
+<body>
+    <div class="header">
+        <h1>강사신청자 소개</h1>
+    </div>
+    <div class="menu">
+        <a th:href="@{/admin/apptechlist}" ><input class="btn" type="button" value="목록" /></a>
+    </div>
+    <div class="content">
+        <p th:utext="${info.intro}" ></p>
+    </div>
+</body>
+<style>
+     body {
+        padding: 100px;
+        background: #0F1429;
+        color: #B4B8CC;
+    }
+    .header {
+        text-align: center;
+        font-size: 33px;
+    }
+    .menu {
+        margin-bottom: 30px;
+    }
+    .content {
+        padding: 15px 0 15px 0;
+        border: 1px solid;
+        border-radius: 0.5em;
+    }
+    .btn {
+        width: 150px;
+        height: 45px;
+        border: 1px solid #4F5675;
+        background-color: #0F1429;
+        color: #B4B8CC;
+        font-size: 20px;
+        border-radius: 0.5rem;
+        cursor: pointer;
+    }
+    .btn:hover {
+        border: 1px solid #74b59d;
+        color: #74b59d;
+    }
+</style>
+</html>

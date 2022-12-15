@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.CoursMapper">
+
+
+        <select id="selectall" parameterType="map" resultType="com.example.dto.CustomCours" >
+        SELECT A.* FROM (
+                SELECT C.*, ROW_NUMBER() OVER (ORDER BY ${option} ${top}) ROWN,  R.* 
+                FROM COURS C LEFT OUTER JOIN ( 
+                 SELECT O.COURSCODE, O.ORDERTOTAL, R.RATINGAVG, REVIEWTOTAL FROM ORDERVIEW O LEFT OUTER JOIN GBVIEW R ON O.COURSCODE = R.COURSCODE
+                ) R 
+                ON C.COURSNO= R.COURSCODE WHERE C.TITLE LIKE '%' || #{text} || '%' AND C.STATUS = #{status}
+                <if test='category != null'>
+                AND C.COURSNO IN
+                        <foreach collection="category" item="category" open="(" close=")" separator=",">
+                        #{category}
+                        </foreach>
+                </if>
+                <if test='diff != null'>
+                AND C.DIFFICULT = #{diff}
+                </if>
+                <if test='instrument != null'>
+                AND C.INSTRUMENT = #{instrument}
+                </if>
+        ) A WHERE ROWN BETWEEN #{start} AND #{start}+11 ORDER BY ROWN ASC
+        </select>            
+
+
+        <select id="countselect" parameterType="map" resultType="Integer">
+                SELECT COUNT(*) FROM COURS C LEFT OUTER JOIN ( 
+                SELECT O.COURSCODE, O.ORDERTOTAL, R.RATINGAVG, REVIEWTOTAL FROM ORDERVIEW O LEFT OUTER JOIN GBVIEW R ON O.COURSCODE = R.COURSCODE
+                ) R 
+                ON C.COURSNO= R.COURSCODE WHERE C.TITLE LIKE '%' || #{text} || '%' AND C.STATUS = #{status}
+                <if test='category != null'>
+                AND C.COURSNO IN
+                        <foreach collection="category" item="category" open="(" close=")" separator=",">
+                        #{category}
+                        </foreach>
+                </if>
+                <if test='diff != null'>
+                AND C.DIFFICULT = #{diff}
+                </if>
+                <if test='instrument != null'>
+                AND C.INSTRUMENT = #{instrument}
+                </if>
+        </select>
+        
+        
+</mapper>

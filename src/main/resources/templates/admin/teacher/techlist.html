@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강사관리</title>
+</head>
+<body>
+    <div class="header">
+        <h1>강사관리</h1>
+    </div>
+    <div class="menu">
+        <a th:href="@{/adhome}" ><input class="btn" type="button" value="메인" /></a>
+        <a th:href="@{/admin/apptechlist}" ><input class="btn" type="button" value="신청자관리" /></a>
+    </div>
+    <div class="content">
+        <table class="tech_table">
+            <tr>
+                <!-- <th>체크</th> -->
+                <th>강사번호</th>
+                <th>카테고리</th>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>연락처</th>
+                <th>이메일</th>
+                <th>생일</th>
+                <th>신청일</th>
+                <th></th>
+            </tr>
+            <tr th:each="obj, idx : ${list}">
+                <!-- <td><input type="checkbox" name="chk" th:value="${obj.id}" /></td> -->
+                <td width="7%" th:text="${obj.teacherno}"></td>
+                <td width="7%" th:text="${obj.category}"></td>
+                <td width="10%" th:text="${obj.id}"></td>
+                <td width="10%" th:text="${obj.name}"></td>
+                <td width="10%" th:text="${obj.phone}"></td>
+                <td width="16%" th:text="${obj.email}"></td>
+                <td width="18%" th:text="${obj.birthday}"></td>
+                <td width="18%" th:text="${obj.regdate}"></td>
+                <td>    
+                    <form th:action="@{/admin/teacherinfo}" method="get">
+                        <input type="hidden" name="teacherno" th:value="${obj.teacherno}" />
+                        <input class="btn1_green" type="submit" value="정보">
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <div class="footer">
+            <th:block th:each="i : ${#numbers.sequence(1, total)}">
+                <a class="page" th:href="@{/admin/techlist(page=${i})}" th:text="${i}"></a>
+            </th:block>
+        </div>
+    </div>
+    <div class="search">
+        <form th:action = "@{/admin/techlist}" method="get">
+            <select name="category" class="select">
+                <option>전체</option>
+                <option>건반</option>
+                <option>기타</option>
+                <option>드럼</option>
+                <option>보컬</option>
+                <option>MIDI</option>
+            </select>
+            <input class="input" type="text" name="keyword" />
+            <input type="hidden" name="page" value=1 />
+            <input class="btn1" type="submit" value="검색" />
+        </form>
+    </div>
+</body>
+<style>
+    body {
+        padding: 100px;
+        background: #0F1429;
+        color: #B4B8CC;
+    }
+    .header {
+        text-align: center;
+        font-size: 33px;
+    }
+    .menu {
+        margin-bottom: 30px;
+    }
+    .content {
+        padding: 15px 0 15px 0;
+        border: 1px solid;
+        border-radius: 0.5em;
+        margin-bottom: 10px;
+    }
+    .btn {
+        width: 150px;
+        height: 45px;
+        border: 1px solid #4F5675;
+        background-color: #0F1429;
+        color: #B4B8CC;
+        font-size: 20px;
+        border-radius: 0.5rem;
+        cursor: pointer;
+    }
+    .btn:hover {
+        border: 1px solid #74b59d;
+        color: #74b59d;
+    }
+    .btn1 {
+        width: 100px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #B4B8CC;
+        color: #B4B8CC;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn1:hover {
+        background-color: #B4B8CC;
+        border: 1px solid #B4B8CC;
+        color: #0F1429;
+    }
+    .btn1_green {
+        width: 100px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #0F1429;
+        color: #74b59d;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn1_green:hover {
+        border: 1px solid #74b59d;
+        color: #74b59d;
+    }
+    .tech_table{
+        text-align: center;
+        border-collapse: collapse;
+    }
+    th {
+        color: #74b59d;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #B4B8CC;
+    }
+    td {
+        padding-top: 10px;
+    }
+    .footer {
+        display: flex;
+        justify-content: center;
+        column-gap: 5px;
+    }
+    .page {
+        color: #B4B8CC;
+    }
+    .select {
+        width: 70px;
+        height: 30px;
+        border-radius: 0.5em;
+        background-color: #0F1429;
+        border: 1px solid #B4B8CC;
+        color: #B4B8CC;
+    }
+    .input {
+        width: 300px;
+        height: 25px;
+        background-color: #0F1429;
+        border: 1px solid #B4B8CC;
+        border-radius: 0.5em;
+        color: #B4B8CC;
+    }
+    .search {
+        text-align: center;
+        color: #B4B8CC;
+    }
+</style>
+</html>

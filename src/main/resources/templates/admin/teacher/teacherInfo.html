@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강사상세보기</title>
+</head>
+<body>
+    <div class="header">
+        <h1>강사상세보기</h1>
+    </div>
+    <div class="menu">
+        <a th:href="@{/admin/techlist}" ><input class="btn" type="button" value="강사목록" /></a>
+        <a th:href="@{/admin/memberlist}" ><input class="btn" type="button" value="회원목록" /></a>
+    </div>
+    <div class="content">
+        <table class="tech_table">
+            <tr>
+        
+                <th>강의번호</th>
+                <th>난이도</th>
+                <th>제목</th>
+                <th>분류</th>
+                <th>기한</th>
+                <th>가격</th>
+                <th>상태</th>
+                <th>강사번호</th>
+                <th>개강일</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="obj, idx : ${list}">
+                <!-- <td><input type="checkbox" name="chk" th:value="${obj.id}" /></td> -->
+                <td th:text="${obj.coursno}"></td>
+                <td th:text="${obj.difficult}"></td>
+                <td th:text="${obj.title}"></td>
+                <td th:text="${obj.instrument}"></td>
+                <td th:text="${obj.period}"></td>
+                <td th:text="${obj.price}"></td>
+                <td th:text="${obj.status}"></td>
+                <td th:text="${obj.teachercode.teacherno}"></td>
+                <td th:text="${obj.regdate}"></td>
+                <td width="8%">    
+                    <form th:action="@{/admin/coursstate}" method="post">
+                        <input type="hidden" name="coursno" th:value="${obj.coursno}" />
+                        <input type="hidden" name="status" th:value="개강" />
+                        <input type="hidden" name="teacherno" th:value="${obj.teachercode.teacherno}" />
+                        <input th:if="${obj.status != '개강'}" type="submit" class="btn1_green" value="개강">
+                    </form>
+                </td>
+                <td width="8%">    
+                    <form th:action="@{/admin/coursstate}" method="post">
+                        <input type="hidden" name="coursno" th:value="${obj.coursno}" />
+                        <input type="hidden" name="status" th:value="편집" />
+                        <input type="hidden" name="teacherno" th:value="${obj.teachercode.teacherno}" />
+                        <input th:if="${obj.status != '편집'}" type="submit" class="btn1_yellow" value="편집">
+                    </form>
+                </td>
+                <td width="8%">    
+                    <form th:action="@{/admin/coursstate}" method="post">
+                        <input type="hidden" name="coursno" th:value="${obj.coursno}" />
+                        <input type="hidden" name="status" th:value="중지" />   
+                        <input type="hidden" name="teacherno" th:value="${obj.teachercode.teacherno}" />
+                        <input th:if="${obj.status != '중지'}" type="submit" class="btn1_red" value="중지">
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <div class="content_message" th:if="${size} < 1"> 개설한 강의가 없습니다. </div>
+    </div>
+</body>
+<style>
+    body {
+        padding: 100px;
+        background: #0F1429;
+        color: #B4B8CC;
+    }
+    .header {
+        text-align: center;
+        font-size: 33px;
+    }
+    .menu {
+        margin-bottom: 30px;
+    }
+    .content {
+        padding: 15px 0 15px 0;
+        border: 1px solid;
+        border-radius: 0.5em;
+    }
+    .content_message {
+        padding: 25px 0 15px 0;
+        display: flex;
+        justify-content: center;
+        font-size: 22px;
+        font-weight: 600;
+    }
+    .btn {
+        width: 150px;
+        height: 45px;
+        border: 1px solid #4F5675;
+        background-color: #0F1429;
+        color: #B4B8CC;
+        font-size: 20px;
+        border-radius: 0.5rem;
+        cursor: pointer;
+    }
+    .btn:hover {
+        border: 1px solid #74b59d;
+        color: #74b59d;
+    }
+    .btn1_green {
+        width: 60px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #0F1429;
+        color: #74b59d;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn1_green:hover {
+        border: 1px solid #74b59d;
+        color: #74b59d;
+    }
+    .btn1_red {
+        width: 60px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #0F1429;
+        color: #C29384;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn1_red:hover {
+        border: 1px solid #C29384;
+        color: #C29384;
+    }
+    .btn1_yellow {
+        width: 60px;
+        height: 30px;
+        background-color: #0F1429;
+        border: 1px solid #0F1429;
+        color: #F5C68E;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    .btn1_yellow:hover {
+        border: 1px solid #F5C68E;
+        color: #F5C68E;
+    }
+    .tech_table{
+        text-align: center;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th {
+        color: #74b59d;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #B4B8CC;
+    }
+    td {
+        padding-top: 10px;
+    }
+</style>
+</html>
